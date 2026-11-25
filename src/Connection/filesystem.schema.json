@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Filesystem",
+  "description": "Read-only document source on a filesystem. Adapter local: a directory of a mount in the application container, below one of the allowed directories (DOCUMENT_SOURCE_LOCAL_ROOTS). Sync definitions select files below the root with include and exclude globs.",
+  "type": "object",
+  "required": ["filesystem", "type", "endpoint_type", "adapter", "root"],
+  "properties": {
+    "filesystem": {
+      "type": "boolean",
+      "const": true,
+      "default": true,
+      "readOnly": true,
+      "description": "Identifier flag of the filesystem connection type"
+    },
+    "type": {
+      "type": "string",
+      "const": "filesystem",
+      "default": "filesystem",
+      "readOnly": true,
+      "description": "Connection type"
+    },
+    "endpoint_type": {
+      "type": "string",
+      "const": "file",
+      "default": "file",
+      "readOnly": true,
+      "description": "Endpoint type"
+    },
+    "adapter": {
+      "type": "string",
+      "enum": ["local"],
+      "default": "local",
+      "title": "Adapter",
+      "description": "Storage adapter: local (a directory of a mount in the application container)"
+    },
+    "root": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "not": {
+        "pattern": "(^|/)\\.\\.(/|$)|\\\\"
+      },
+      "title": "Root",
+      "description": "Root directory of the source; sync definitions select files below it. Adapter local: an absolute path that must lie within one of the allowed directories (DOCUMENT_SOURCE_LOCAL_ROOTS), e.g. /mnt/uploads/customer/project; no '..' segments, no backslashes"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"adapter": {"const": "local"}}
+      },
+      "then": {
+        "properties": {
+          "root": {"pattern": "^/"}
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

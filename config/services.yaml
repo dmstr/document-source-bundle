@@ -1,0 +1,42 @@
+# file generated with AI assistance: Claude Code - 2026-10-08 12:04:33 UTC
+# Services of dmstr/document-source-bundle, imported by DocumentSourceBundle::loadExtension().
+# The application's _instanceof rules do not reach services defined here, so every
+# tag the bundle relies on is declared explicitly in this file.
+#
+# Deliberately NOT registered: League\Flysystem\FilesystemOperator. In the
+# host app that service type is the document store; source filesystems are
+# built per connection by SourceFilesystemFactory and never autowired.
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: false
+
+    # Allow-list of `local` roots (dmstr_document_source.local_roots, by
+    # default env DOCUMENT_SOURCE_LOCAL_ROOTS, comma-separated).
+    Dmstr\DocumentSource\Filesystem\LocalRootAllowList:
+        arguments:
+            $roots: '%dmstr_document_source.local_roots%'
+
+    # The `filesystem` connection type: schema branch, extension registry
+    # (endpoint_type file) and health probe.
+    Dmstr\DocumentSource\Connection\FilesystemConnectionType:
+        tags:
+            - 'dmstr_openapi_json_schema.provider'
+            - 'dmstr_api_configuration.extension'
+            - 'dmstr_api_configuration.health_probe'
+
+    # Source filesystems per connection at runtime; a test may alias the
+    # interface to a fake.
+    Dmstr\DocumentSource\Filesystem\SourceFilesystemFactory: ~
+    Dmstr\DocumentSource\Filesystem\SourceFilesystemFactoryInterface:
+        alias: Dmstr\DocumentSource\Filesystem\SourceFilesystemFactory
+
+    # Stateless; opens a Selection per run.
+    Dmstr\DocumentSource\Selection\FileSelector: ~
+
+    # Idempotent seed of one filesystem connection (#[AsCommand] via autoconfigure).
+    Dmstr\DocumentSource\Command\FilesystemConnectionSeedCommand:
+        autoconfigure: true
+
+    # Import port: the application aliases Dmstr\DocumentSource\Import\ImportSinkInterface
+    # to its implementation; the bundle has none.

@@ -1,0 +1,61 @@
+{
+    "name": "dmstr/document-source-bundle",
+    "description": "Symfony bundle for external document sources: a `filesystem` connection type of dmstr/api-configuration-bundle (local mounts below an allow-list) with health probe and idempotent seed command, Flysystem operators built per connection at runtime, file selection by root and include/exclude globs with symlink and size guards, and an import port the application implements.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": [
+        "documents",
+        "filesystem",
+        "flysystem",
+        "import",
+        "symfony",
+        "bundle"
+    ],
+    "authors": [
+        {
+            "name": "diemeisterei GmbH",
+            "homepage": "https://diemeisterei.de"
+        }
+    ],
+    "require": {
+        "php": ">=8.5",
+        "dmstr/api-configuration-bundle": "^0.7",
+        "dmstr/openapi-json-schema-bundle": "^0.5",
+        "doctrine/doctrine-migrations-bundle": "^3.4",
+        "doctrine/orm": "^3.3",
+        "league/flysystem": "^3.29",
+        "league/flysystem-local": "^3.29",
+        "symfony/config": "^7.4",
+        "symfony/console": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/finder": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/validator": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "require-dev": {
+        "ext-pdo_pgsql": "*",
+        "api-platform/symfony": "^4.4",
+        "dmstr/api-platform-utils-bundle": "^0.6",
+        "doctrine/doctrine-bundle": "^2.14",
+        "opis/json-schema": "^2.3",
+        "phpunit/phpunit": "^12.0 || ^13.0",
+        "psr/log": "^3.0",
+        "symfony/cache": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/security-bundle": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dmstr\\DocumentSource\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dmstr\\DocumentSource\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

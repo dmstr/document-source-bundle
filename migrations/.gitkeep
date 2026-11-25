@@ -1,0 +1,4 @@
+# file generated with AI assistance: Claude Code - 2026-10-08 12:04:33 UTC
+# Migrations of the bundle (namespace Dmstr\DocumentSource\Migrations).
+# DocumentSourceBundle registers this directory with DoctrineMigrationsBundle;
+# the current version ships no migration.
